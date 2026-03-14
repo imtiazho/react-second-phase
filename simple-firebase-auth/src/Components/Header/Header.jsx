@@ -7,6 +7,7 @@ const Header = () => {
       <ul style={{display: "flex", gap: "1rem"}}>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/login">Login</NavLink>
+        <NavLink to="/reg">Register</NavLink>
       </ul>
     </nav>
   );
