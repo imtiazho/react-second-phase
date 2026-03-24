@@ -1,13 +1,17 @@
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import Root from "./Layouts/Root/Root";
 import Login from "./Components/Home/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
+import AuthProvider from "./Context/AuthProvider";
+
+// export const AuthContext = createContext(null);
+
+// const userInfo = {
+//   email: "potato@alu.com",
+// };
 
 const router = createBrowserRouter([
   {
@@ -28,6 +32,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    {/* <AuthContext.Provider value={userInfo}>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthContext.Provider> */}
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </React.StrictMode>,
 );
