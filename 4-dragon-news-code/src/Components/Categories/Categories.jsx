@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router";
+import './Categories.css';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -9,6 +10,8 @@ const Categories = () => {
       .then((res) => res.json())
       .then((data) => setCategories(data));
   }, []);
+
+
 
   return (
     <div>

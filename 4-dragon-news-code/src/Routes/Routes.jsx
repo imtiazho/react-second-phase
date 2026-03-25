@@ -2,6 +2,9 @@ import { createBrowserRouter } from "react-router";
 import HomeLayout from "../Layouts/HomeLayout/HomeLayout";
 import Home from "../Pages/Home";
 import CategoryNews from "../Pages/CategoryNews/CategoryNews";
+import NewsDetails from "../Components/NewsDetails/NewsDetails";
+import Login from "../Components/Login/Login";
+import Register from "../Components/Register/Register";
 
 const router = createBrowserRouter([
   {
@@ -14,17 +17,23 @@ const router = createBrowserRouter([
         },
         {
             path: '/category/:id',
-            Component: CategoryNews
+            Component: CategoryNews,
+            loader: () => fetch("/public/news.json")
+        },
+        {
+            path: '/news-details/:id',
+            Component: NewsDetails,
+            loader: () => fetch("/public/news.json")
         }
     ]
   },
   {
-    path: "/auth",
-    element: <h1>Auth Layout</h1>,
+    path: "/login",
+    Component: Login,
   },
   {
-    path: "/news",
-    element: <h1>News Layout</h1>,
+    path: "/register",
+    element: <Register></Register>,
   },
   {
     path: "*",
