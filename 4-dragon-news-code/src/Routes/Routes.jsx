@@ -5,35 +5,42 @@ import CategoryNews from "../Pages/CategoryNews/CategoryNews";
 import NewsDetails from "../Components/NewsDetails/NewsDetails";
 import Login from "../Components/Login/Login";
 import Register from "../Components/Register/Register";
+import AuthLayout from "../Layouts/AuthLayout/AuthLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout></HomeLayout>,
     children: [
-        {
-            path: '/',
-            Component: Home
-        },
-        {
-            path: '/category/:id',
-            Component: CategoryNews,
-            loader: () => fetch("/public/news.json")
-        },
-        {
-            path: '/news-details/:id',
-            Component: NewsDetails,
-            loader: () => fetch("/public/news.json")
-        }
-    ]
+      {
+        path: "/",
+        Component: Home,
+      },
+      {
+        path: "/category/:id",
+        Component: CategoryNews,
+        loader: () => fetch("/public/news.json"),
+      },
+    ],
   },
   {
-    path: "/login",
-    Component: Login,
+    path: "/auth",
+    Component: AuthLayout,
+    children: [
+      {
+        path: "/auth/login",
+        Component: Login,
+      },
+      {
+        path: "/auth/register",
+        element: <Register></Register>,
+      },
+    ],
   },
   {
-    path: "/register",
-    element: <Register></Register>,
+    path: "/news-details/:id",
+    Component: NewsDetails,
+    loader: () => fetch("/public/news.json"),
   },
   {
     path: "*",
