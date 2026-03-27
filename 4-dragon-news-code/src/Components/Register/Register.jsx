@@ -19,20 +19,17 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    createUser(email, password)
-      .then((res) => {
-        const user = res.user;
-        updateUser({ displayName: name, photoURL: photo })
-          .then((res) => {
-            setUser({ ...user, displayName: name, photoURL: photo });
-            navigate('/')
-          })
-          .catch((error) => {
-            console.log(error);
-            setUser(user);
-          });
-      })
-      .catch((error) => console.log(error));
+    createUser(email, password).then((res) => {
+      const user = res.user;
+      updateUser({ displayName: name, photoURL: photo })
+        .then((res) => {
+          setUser({ ...user, displayName: name, photoURL: photo });
+          navigate("/");
+        })
+        .catch((error) => {
+          setUser(user);
+        });
+    });
   };
 
   return (
