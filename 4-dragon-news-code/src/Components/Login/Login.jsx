@@ -1,20 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import { HiOutlineLockClosed, HiOutlineMail } from "react-icons/hi";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Login = () => {
+  const [error, setError] = useState("");
   const { loginUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-
     loginUser(email, password)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res);
+        navigate(`${location.state ? location.state : "/"}`);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.code);
+      });
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center  p-4">
       <div className="card w-full max-w-lg bg-base-100 shadow-xl rounded-none p-8 md:p-12">
@@ -41,6 +51,7 @@ const Login = () => {
                   <input
                     type="email"
                     name="email"
+                    required
                     placeholder="Enter your email address"
                     className="input bg-gray-100 w-full pl-10 focus:outline-none focus:border-gray-400 border-none rounded-sm"
                   />
@@ -61,6 +72,7 @@ const Login = () => {
                     <HiOutlineLockClosed className="text-gray-400 text-xl" />
                   </div>
                   <input
+                    required
                     type="password"
                     name="password"
                     placeholder="Enter your password"
@@ -77,7 +89,9 @@ const Login = () => {
               </button>
             </div>
           </form>
-
+          {
+            error && <p className="text-red-600">{error}</p>
+          }
           <p className="text-center mt-8 text-sm font-medium text-gray-600">
             Dont Have An Account?
             <Link

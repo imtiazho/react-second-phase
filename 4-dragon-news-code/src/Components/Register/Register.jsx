@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HiOutlineUser,
   HiOutlinePhotograph,
@@ -10,8 +10,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Register = () => {
-  const { createUser, setUser } = useContext(AuthContext);
-
+  const { createUser, setUser, updateUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -19,10 +19,20 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    createUser(email, password).then((res) => {
-      const user = res.user;
-      setUser(user);
-    }).catch(error => console.log(error));
+    createUser(email, password)
+      .then((res) => {
+        const user = res.user;
+        updateUser({ displayName: name, photoURL: photo })
+          .then((res) => {
+            setUser({ ...user, displayName: name, photoURL: photo });
+            navigate('/')
+          })
+          .catch((error) => {
+            console.log(error);
+            setUser(user);
+          });
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
