@@ -1,0 +1,37 @@
+১. অথেন্টিকেশন ও সাইন-আপ (The Entry Logic)
+Social Login: Firebase ব্যবহার করে Google এবং GitHub লগইন ইমপ্লিমেন্ট করা।
+
+Email/Password Setup: createUserWithEmailAndPassword ব্যবহার করে ম্যানুয়াল রেজিস্ট্রেশন।
+
+Regex Validation: ইমেইল ফরম্যাট এবং পাসওয়ার্ডের জন্য স্ট্রং Regex (যেমন: ১টি বড় হাতের অক্ষর, ১টি ছোট হাতের অক্ষর, ১টি সংখ্যা এবং ১টি স্পেশাল ক্যারেক্টার বাধ্যতামূলক)।
+
+Toggle Password: পাসওয়ার্ড ইনপুট ফিল্ডে 'Eye Icon' দিয়ে টাইপ text এবং password-এর মধ্যে সুইচ করা।
+
+Terms & Conditions: একটি Checkbox থাকবে যা checked না হলে 'Sign Up' বাটন ডিজেবল (disabled) থাকবে।
+
+Email Verification: ইউজার রেজিস্ট্রেশন করার পর sendEmailVerification পাঠানো এবং ইমেইল ভেরিফাই না করা পর্যন্ত তাকে প্রোটেক্টড রাউটে ঢুকতে না দেওয়া।
+
+২. প্রোফাইল ও ইউজার ম্যানেজমেন্ট (The Identity)
+User Profile Update: লগইন করার পর ইউজারের displayName এবং photoURL আপডেট করার জন্য একটি আলাদা ফর্ম।
+
+Password Reset: লগইন পেজে "Forgot Password" বাটন যা ইউজারকে ইমেইল রিকভারি লিঙ্ক পাঠাবে।
+
+Persistent Auth State: onAuthStateChanged ব্যবহার করে ইউজারের লগইন স্ট্যাটাস সবসময় ট্র্যাক করা যাতে পেজ রিফ্রেশ দিলে লগআউট না হয়।
+
+৩. রাউটিং ও প্রাইভেট অ্যাক্সেস (The Router Logic)
+User Context: একটি AuthProvider তৈরি করা যা পুরো অ্যাপে user অবজেক্ট এবং loading স্টেট শেয়ার করবে।
+
+Private Route: /dashboard, /profile, এবং /secret-data রাউটগুলো এমনভাবে প্রোটেক্ট করা যেন লগইন ছাড়া কেউ ঢুকতে না পারে।
+
+Loading State: Auth ডাটা লোড হওয়ার সময় একটি 'Loading Spinner' দেখানো যাতে প্রাইভেট রাউট সরাসরি রিডাইরেক্ট না করে দেয়।
+
+Redirect after Login: ইউজার যদি কোনো প্রাইভেট লিংকে ক্লিক করে লগইন পেজে যায়, তবে লগইন শেষে তাকে আবার সেই নির্দিষ্ট লিংকেই ফেরত পাঠানো (Location State ব্যবহার করে)।
+
+৪. ইঞ্জিনিয়ারিং চ্যালেঞ্জ (ভাজাপোড়া টাস্কস)
+Real-time Validation: ইউজার যখন পাসওয়ার্ড টাইপ করবে, তখনই Regex চেক করে নিচে লাল/সবুজ টেক্সটে ফিডব্যাক দেওয়া।
+
+Conditional Navbar: ইউজার লগইন থাকলে 'Logout' এবং 'Profile' দেখাবে, লগআউট থাকলে 'Login' এবং 'Register' দেখাবে।
+
+Error Handling: ভুল পাসওয়ার্ড বা ইমেইল দিলে Firebase-এর এরর কোডগুলো (যেমন: auth/user-not-found) ক্যাচ করে ইউজারের ভাষায় সুন্দর এরর মেসেজ দেখানো।
+
+Sign Out Logic: সেশন ক্লিয়ার করে ইউজারকে হোমে পাঠিয়ে দেওয়া।
