@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Login = () => {
-  const { googleSignIn, setLoading } = use(AuthContext);
+  const { googleSignIn, setLoading, signInUser } = use(AuthContext);
 
   const handleGoogleSignIn = () => {
     googleSignIn()
@@ -13,6 +13,16 @@ const Login = () => {
         console.log(res);
         setLoading(false);
       })
+      .catch((error) => console.log(error));
+  };
+
+  const handleSignInWithEmailAndPassword = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    signInUser(email, password)
+      .then((res) => console.log(res))
       .catch((error) => console.log(error));
   };
 
@@ -27,7 +37,7 @@ const Login = () => {
 
             <div className="divider mb-8"></div>
 
-            <form>
+            <form onSubmit={handleSignInWithEmailAndPassword}>
               {/* Email Field */}
               <div className="form-control w-full mb-4">
                 <label className="label">

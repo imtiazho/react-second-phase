@@ -1,13 +1,15 @@
 import React, { use } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import userIcon from "../../assets/user.png";
 import { AuthContext } from "../../Context/AuthContext";
 
 const NavBar = () => {
   const { user, logOut, loading } = use(AuthContext);
+  const navigate = useNavigate();
 
   const signOutUser = () => {
     logOut().then().catch();
+    navigate('/auth/login')
   };
 
   return (
