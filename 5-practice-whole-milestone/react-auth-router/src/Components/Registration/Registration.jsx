@@ -7,10 +7,15 @@ import {
 import { HiOutlineLockClosed } from "react-icons/hi2";
 import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
-import { updateProfile } from "firebase/auth";
-
 const Registration = () => {
-  const { googleSignIn, createUser, setLoading, setUser, updateUser } = use(AuthContext);
+  const {
+    googleSignIn,
+    createUser,
+    setLoading,
+    setUser,
+    updateUser,
+    emailVerification,
+  } = use(AuthContext);
 
   const handleGoogleSignIn = () => {
     googleSignIn()
@@ -29,6 +34,9 @@ const Registration = () => {
     const password = e.target.password.value;
 
     createUser(email, password).then((res) => {
+      emailVerification().then(() => {
+        alert("Verification email sent! Please check your inbox.");
+      });
       const user = res.user;
       updateUser({ displayName: name, photoURL: photo })
         .then((res) => {
