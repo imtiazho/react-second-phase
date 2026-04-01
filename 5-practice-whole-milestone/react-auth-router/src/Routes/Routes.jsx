@@ -8,6 +8,7 @@ import About from "../Components/About/About";
 import Career from "../Components/Career/Career";
 import AuthLayout from "../Layouts/AuthLayout";
 import DataBase from "../Components/DataBase/DataBase";
+import PrivateRoute from "../Provider/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +29,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/data",
-        Component: DataBase,
-      }
+        element: (
+          <PrivateRoute>
+            <DataBase></DataBase>
+          </PrivateRoute>
+        ),
+        loader: () =>
+          fetch(
+            "https://raw.githubusercontent.com/imtiazho/JsonData/refs/heads/main/data.json",
+          ).then((res) => res.json()),
+        hydrateFallbackElement: (
+          <span className="loading loading-dots loading-xl"></span>
+        ),
+      },
     ],
   },
   {

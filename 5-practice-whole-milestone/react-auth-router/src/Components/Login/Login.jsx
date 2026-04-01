@@ -1,16 +1,21 @@
-import React, { use } from "react";
+import React, { use, useRef } from "react";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { HiOutlineLockClosed } from "react-icons/hi2";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Login = () => {
-  const { googleSignIn, setLoading, signInUser } = use(AuthContext);
+  const { googleSignIn, setLoading, signInUser, resetPassword } =
+    use(AuthContext);
+  const emailRef = useRef();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((res) => {
         console.log(res);
+        navigate(`${location.state ? location.state : '/'}`)
         setLoading(false);
       })
       .catch((error) => console.log(error));
@@ -22,7 +27,18 @@ const Login = () => {
     const password = e.target.password.value;
 
     signInUser(email, password)
-      .then((res) => console.log(res))
+      .then((res) => {console.log(res)
+        navigate(`${location.state ? location.state : '/'}`)
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleForgetPassword = () => {
+    const email = emailRef.current.value;
+    resetPassword(email)
+      .then(() => {
+        console.log("Sent Email");
+      })
       .catch((error) => console.log(error));
   };
 
@@ -53,6 +69,7 @@ const Login = () => {
                     <input
                       type="email"
                       name="email"
+                      ref={emailRef}
                       required
                       placeholder="Enter your email address"
                       className="input bg-gray-100 w-full pl-10 focus:outline-none focus:border-gray-400 border-none rounded-sm"
@@ -134,6 +151,10 @@ const Login = () => {
               >
                 Register
               </Link>
+            </p>
+
+            <p onClick={handleForgetPassword} className="text-center mt-8 text-sm font-medium text-gray-600">
+              Reset Password
             </p>
           </div>
         </div>

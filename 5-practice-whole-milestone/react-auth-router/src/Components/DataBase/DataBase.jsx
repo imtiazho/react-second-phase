@@ -1,12 +1,14 @@
-import React, { use } from 'react';
+import React, { use } from "react";
+import { useLoaderData } from "react-router";
 
 const DataBase = () => {
-
-    return (
-        <div>
-            DataBase : It should be private route
-        </div>
-    );
+  const data = useLoaderData();
+  console.log(data);
+  return (
+    <div>
+      DataBase : It should be private route Data. Quantity: {data.length}
+    </div>
+  );
 };
 
 export default DataBase;
