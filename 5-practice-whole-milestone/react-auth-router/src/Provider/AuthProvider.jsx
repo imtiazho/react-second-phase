@@ -77,7 +77,7 @@ const AuthProvider = ({ children }) => {
     emailVerification,
     logOut,
   };
-  console.log(user);
+  
   return (
     <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
   );
